@@ -2,16 +2,23 @@ try{ var base = window; }catch( error ){ base = exports; }
 ( function module( base ){
 	define( "bindDOMFactory",
 		[
-			"angular"
+			"angular",
+			"jquery",
+			"safeApply"
 		]
 		function construct( ){
 			var bindDOMFactory = function bindDOMFactory( moduleNamespace ){
+				safeApplyFactory( moduleNamespace );
 				angular.module( moduleNamespace )
 					.factory( "bindDOM",
 						[
-							function construct( ){
-								return ( function bindDOM( scope, element, attributes, controller ){
-									
+							"safeApply",
+							function construct( safeApply ){
+								return ( function bindDOM( scope, element, attributes ){
+									safeApply( scope );
+									scope.element = $( element );
+									scope.attributes = attributes;
+									scope.safeApply( );
 								} );
 							}
 						] );
