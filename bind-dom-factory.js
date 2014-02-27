@@ -5,7 +5,7 @@ try{ var base = window; }catch( error ){ base = exports; }
 			"angular",
 			"jquery",
 			"safeApply"
-		]
+		],
 		function construct( ){
 			var bindDOMFactory = function bindDOMFactory( moduleNamespace ){
 				safeApplyFactory( moduleNamespace );
