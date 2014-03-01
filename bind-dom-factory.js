@@ -2,9 +2,10 @@ try{ var base = window; }catch( error ){ base = exports; }
 ( function module( base ){
 	define( "bindDOMFactory",
 		[
+			"requirejs",
 			"angular",
 			"jquery",
-			"safeApply"
+			"safeApplyFactory"
 		],
 		function construct( ){
 			var bindDOMFactory = function bindDOMFactory( moduleNamespace ){
@@ -15,9 +16,13 @@ try{ var base = window; }catch( error ){ base = exports; }
 							"safeApply",
 							function construct( safeApply ){
 								return ( function bindDOM( scope, element, attributes ){
+									if( "DOMBound" in scope ){
+										return;
+									}
 									safeApply( scope );
 									scope.element = $( element );
 									scope.attributes = attributes;
+									scope.DOMBound = true;
 									scope.safeApply( );
 								} );
 							}
