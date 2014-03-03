@@ -5,12 +5,18 @@ try{ var base = window; }catch( error ){ base = exports; }
 			"requirejs",
 			"angular",
 			"jquery",
-			"safeApplyFactory"
+			"safeApplyFactory",
+			"appDetermine"
 		],
 		function construct( ){
+			var registeredModule;
 			var bindDOMFactory = function bindDOMFactory( moduleNamespace ){
+				if( registeredModule ){
+					return;
+				}
+				registeredModule = moduleNamespace;
 				safeApplyFactory( moduleNamespace );
-				angular.module( moduleNamespace )
+				appDetermine( moduleNamespace )
 					.factory( "bindDOM",
 						[
 							"safeApply",
